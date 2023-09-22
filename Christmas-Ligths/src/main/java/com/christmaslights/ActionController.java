@@ -4,6 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ActionController {
+
+    private static final ActionTypeInterface TURN_ON = new TurnOn();
+    private static final ActionTypeInterface TURN_OFF = new TurnOff();
+    private static final ActionTypeInterface TOGGLE = new Toggle();
     public void executeInstruction(LightGrid grid, String instruction) {
         Pattern pattern = Pattern.compile("(turn on|turn off|toggle) (\\d+),(\\d+) through (\\d+),(\\d+)");
         Matcher matcher = pattern.matcher(instruction);
@@ -18,9 +22,9 @@ public class ActionController {
             ActionTypeInterface actionType = null;
 
             switch (action) {
-                case "turn on" -> actionType = new TurnOn();
-                case "turn off" -> actionType = new TurnOff();
-                case "toggle" -> actionType = new Toggle();
+                case "turn on" -> actionType = TURN_ON;
+                case "turn off" -> actionType = TURN_OFF;
+                case "toggle" -> actionType = TOGGLE;
                 default -> System.out.println("Invalid Instruction");
             }
             if (actionType != null) {
